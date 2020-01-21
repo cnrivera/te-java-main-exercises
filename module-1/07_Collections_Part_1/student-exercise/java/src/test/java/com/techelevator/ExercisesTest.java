@@ -97,19 +97,19 @@ public class ExercisesTest {
 
 	@Test
 	public void arrayInt2ListDouble() {
-		String failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(2.0d, 4.0d, 5.0d, 100.0d, 48.0d)),
+		String failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(2.5d, 4.0d, 5.5d, 100.0d, 48.5d)),
 				exercises.arrayInt2ListDouble(new int[] { 5, 8, 11, 200, 97 }));
 		if (failureMessage != null) {
 			fail("Input: arrayInt2ListDouble(new int[] {5, 8, 11, 200, 97})" + failureMessage);
 		}
 
-		failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(372.0d, 11.0d, 22.0d, 4508.0d, 3.0d)),
+		failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(372.5d, 11.5d, 22.0d, 4508.5d, 3.0d)),
 				exercises.arrayInt2ListDouble(new int[] { 745, 23, 44, 9017, 6 }));
 		if (failureMessage != null) {
 			fail("Input: arrayInt2ListDouble(new int[] {745, 23, 44, 9017, 6})" + failureMessage);
 		}
 
-		failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(42.0d, 49.0d, 1642.0d, 6.0d, 438.0d)),
+		failureMessage = compareArrayLists(new ArrayList<Double>(Arrays.asList(42.0d, 49.5d, 1642.5d, 6.5d, 438.5d)),
 				exercises.arrayInt2ListDouble(new int[] { 84, 99, 3285, 13, 877 }));
 		if (failureMessage != null) {
 			fail("Input: arrayInt2ListDouble(new int[] {84, 99, 3285, 13, 877})" + failureMessage);
