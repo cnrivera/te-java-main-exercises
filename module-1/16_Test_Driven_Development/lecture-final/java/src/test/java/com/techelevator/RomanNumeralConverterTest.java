@@ -46,4 +46,10 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("MM", result);
 	}
 	
+	@Test
+	public void converting_1001_returns_MI() {
+		String result = converter.convertToRoman(1001); //Act
+		Assert.assertEquals("MI", result);
+	}
+	
 }
