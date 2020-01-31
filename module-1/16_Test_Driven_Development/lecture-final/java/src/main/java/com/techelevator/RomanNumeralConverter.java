@@ -7,6 +7,8 @@ public class RomanNumeralConverter {
 
 		result += doConversionStep(input, 1000, "M");
 		input = input % 1000;
+		result += doConversionStep(input, 4, "IV");
+		input = input % 4;
 		result += doConversionStep(input, 1, "I");
 
 		
