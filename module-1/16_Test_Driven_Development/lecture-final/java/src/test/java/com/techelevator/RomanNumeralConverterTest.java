@@ -66,4 +66,10 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("IV", result);
 	}
 	
+	@Test
+	public void converting_1500_returns_MD() {
+		String result = converter.convertToRoman(1500); //Act
+		Assert.assertEquals("MD", result);
+	}
+	
 }
