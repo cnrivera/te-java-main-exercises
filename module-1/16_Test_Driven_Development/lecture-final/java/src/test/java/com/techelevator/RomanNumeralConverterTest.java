@@ -78,5 +78,11 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("CLIX", result);
 	}
 	
+	@Test
+	public void converting_6_returns_VI() {
+		String result = converter.convertToRoman(6); //Act
+		Assert.assertEquals("VI", result);
+	}
+	
 	
 }
