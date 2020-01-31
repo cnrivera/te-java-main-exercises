@@ -3,11 +3,10 @@ package com.techelevator;
 public class RomanNumeralConverter {
 
 	public String convertToRoman(int input) {
+		String result = "II";
 		if (input == 1) {
-			return "I";
+			result = "I";
 		}
-		else {
-			return "II";
-		}
+		return result;
 	}
 }
