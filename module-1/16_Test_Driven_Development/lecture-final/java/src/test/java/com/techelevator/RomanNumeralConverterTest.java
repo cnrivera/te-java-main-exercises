@@ -72,4 +72,11 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("MD", result);
 	}
 	
+	@Test
+	public void converting_159_returns_CLIX() {
+		String result = converter.convertToRoman(159); //Act
+		Assert.assertEquals("CLIX", result);
+	}
+	
+	
 }
