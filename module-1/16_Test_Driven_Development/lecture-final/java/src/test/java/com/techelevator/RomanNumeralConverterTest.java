@@ -52,4 +52,18 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("MI", result);
 	}
 	
+	@Test
+	public void converting_1002_and_3003_return_expected_values() {
+		String result = converter.convertToRoman(1002); //Act
+		Assert.assertEquals("MII", result);
+		result = converter.convertToRoman(3003); //Act
+		Assert.assertEquals("MMMIII", result);
+	}
+	
+	@Test
+	public void converting_4_returns_IV() {
+		String result = converter.convertToRoman(4); //Act
+		Assert.assertEquals("IV", result);
+	}
+	
 }
