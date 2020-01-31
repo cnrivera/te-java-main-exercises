@@ -26,4 +26,12 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("II", result);
 	}
 	
+	@Test
+	public void converting_3_returns_III() {
+		String result = converter.convertToRoman(3); //Act
+		Assert.assertEquals("III", result);
+	}
+	
+	
+	
 }
