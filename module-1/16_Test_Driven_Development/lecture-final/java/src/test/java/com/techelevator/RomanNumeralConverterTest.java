@@ -32,6 +32,12 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("III", result);
 	}
 	
+	@Test
+	public void converting_3000_returns_MMM() {
+		String result = converter.convertToRoman(3000); //Act
+		Assert.assertEquals("MMM", result);
+	}
+	
 	
 	
 }
