@@ -95,4 +95,14 @@ public class RomanNumeralConverterTest {
 		String result = converter.convertToRoman(10); //Act
 		Assert.assertEquals("X", result);
 	}
+	
+	@Test
+	public void converting_multiples_of_4_returns_expected_values() {
+		String result = converter.convertToRoman(4); //Act
+		Assert.assertEquals("IV", result);
+		result = converter.convertToRoman(40); //Act
+		Assert.assertEquals("XL", result);
+		result = converter.convertToRoman(400); //Act
+		Assert.assertEquals("CD", result);
+	}
 }
