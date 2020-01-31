@@ -105,4 +105,10 @@ public class RomanNumeralConverterTest {
 		result = converter.convertToRoman(400); //Act
 		Assert.assertEquals("CD", result);
 	}
+	
+	@Test
+	public void converting_positive_weird_numbers_all_work() {
+		Assert.assertEquals("MDCCCLXXXVIII", converter.convertToRoman(1888));
+		Assert.assertEquals("CDXLIV", converter.convertToRoman(444));
+	}
 }

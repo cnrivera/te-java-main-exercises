@@ -24,21 +24,13 @@ public class RomanNumeralConverter {
 
 	public String convertToRoman(int input) {
 		String result = "";
-
 		for(int i : SYMBOLS.keySet()) {
-			result += doConversionStep(input, i, SYMBOLS.get(i));
-			input = input % i;
+			while (input >= i) {
+				result += SYMBOLS.get(i);
+				input -= i;
+			}
 		}
-
 		return result;
 	}
 	
-	private String doConversionStep(int input, int value, String symbol) {
-		String result = "";
-		while (input >= value) {
-			result += symbol;
-			input -= value;
-		}
-		return result;
-	}
 }
