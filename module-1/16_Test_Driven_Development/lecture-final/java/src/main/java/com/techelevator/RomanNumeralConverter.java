@@ -6,6 +6,8 @@ public class RomanNumeralConverter {
 		String result = "II";
 		if (input == 1) {
 			result = "I";
+		} else if (input == 3) {
+			result = "III";
 		}
 		return result;
 	}
