@@ -1,19 +1,26 @@
 package com.techelevator;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 public class RomanNumeralConverter {
+	
+	private static final Map<Integer, String> SYMBOLS = new LinkedHashMap<>();
+	static {
+		SYMBOLS.put(1000, "M");
+		SYMBOLS.put(500, "D");
+		SYMBOLS.put(4, "IV");
+		SYMBOLS.put(1, "I");
+	}
 
 	public String convertToRoman(int input) {
 		String result = "";
 
-		result += doConversionStep(input, 1000, "M");
-		input = input % 1000;
-		result += doConversionStep(input, 500, "D");
-		input = input % 500;
-		result += doConversionStep(input, 4, "IV");
-		input = input % 4;
-		result += doConversionStep(input, 1, "I");
+		for(int i : SYMBOLS.keySet()) {
+			result += doConversionStep(input, i, SYMBOLS.get(i));
+			input = input % i;
+		}
 
-		
 		return result;
 	}
 	
