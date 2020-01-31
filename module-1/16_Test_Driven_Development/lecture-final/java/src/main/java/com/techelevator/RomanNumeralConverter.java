@@ -7,7 +7,12 @@ public class RomanNumeralConverter {
 
 		if (input == 3000) {
 			result = "MMM";
-		} else {
+		} else if (input == 2000) {
+			result = "MM";
+		} else if (input == 1000) {
+			result = "M";
+		}
+		else {
 
 			for (int i = 0; i < input; i++) {
 				result += "I";
