@@ -38,6 +38,12 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("MMM", result);
 	}
 	
-	
+	@Test
+	public void converting_1000_and_2000_return_expected_values() {
+		String result = converter.convertToRoman(1000); //Act
+		Assert.assertEquals("M", result);
+		result = converter.convertToRoman(2000); //Act
+		Assert.assertEquals("MM", result);
+	}
 	
 }
