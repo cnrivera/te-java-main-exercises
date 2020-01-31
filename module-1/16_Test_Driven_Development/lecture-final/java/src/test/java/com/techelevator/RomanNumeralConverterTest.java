@@ -84,5 +84,11 @@ public class RomanNumeralConverterTest {
 		Assert.assertEquals("VI", result);
 	}
 	
+	@Test
+	public void converting_990_returns_CMXC() {
+		String result = converter.convertToRoman(990); //Act
+		Assert.assertEquals("CMXC", result);
+	}
+	
 	
 }
