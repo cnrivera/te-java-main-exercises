@@ -3,16 +3,27 @@ package com.techelevator;
 import org.junit.Test;
 
 import org.junit.Assert;
+import org.junit.Before;
 
 public class RomanNumeralConverterTest {
 
+	private RomanNumeralConverter converter;
+	
+	@Before
+	public void setup() {
+		converter = new RomanNumeralConverter(); //Arrange
+	}
 	
 	@Test
 	public void converting_1_returns_I() {
-		RomanNumeralConverter converter = new RomanNumeralConverter(); //Arrange
 		String result = converter.convertToRoman(1); //Act
 		Assert.assertEquals("I", result);
-		
+	}
+	
+	@Test
+	public void converting_2_returns_II() {
+		String result = converter.convertToRoman(2); //Act
+		Assert.assertEquals("II", result);
 	}
 	
 }
