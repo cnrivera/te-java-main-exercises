@@ -1,0 +1,21 @@
+html {
+  font: 96px Courier;
+}
+
+.box {
+  width: 1rem;
+  height: 1rem;
+  text-align: center;
+  color: white;
+  font-size: .6rem;
+  font-weight: bold;
+  padding-top: .3rem;
+}
+
+.even {
+  background-color: turquoise;
+}
+
+.odd {
+  background-color: salmon;
+}
