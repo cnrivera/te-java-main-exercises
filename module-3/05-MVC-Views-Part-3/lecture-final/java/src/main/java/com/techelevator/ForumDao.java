@@ -9,7 +9,7 @@ public class ForumDao {
 	
 	public ForumDao() {
 		allTopics = Arrays.asList(new ForumTopic[]{new ForumTopic(1L, "Should Pluto be a planet???"),
-							      new ForumTopic(2L, "Are Vulcans real?"),
+							      new ForumTopic(2L, "Are <span style=\"font-size: 100px\">Vulcans</span> real?"),
 								  new ForumTopic(3L, "The Moon Landing was a hoax!!!")});
 	}
 	

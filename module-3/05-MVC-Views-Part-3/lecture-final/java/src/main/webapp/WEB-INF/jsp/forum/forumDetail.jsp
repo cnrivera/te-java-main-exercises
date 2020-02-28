@@ -4,8 +4,8 @@
 	<c:param name="pageTitle">The Solar System Geek Forum</c:param>
 </c:import>
 
-<h2>${topic.title}</h2>
+<h2><c:out value="${topic.title}"/></h2>
 
-<p>More stuff goes here...</p>
+<p>More stuff goes here...like ${param.example}</p>
 
 <c:import url="/WEB-INF/jsp/footer.jsp"/>

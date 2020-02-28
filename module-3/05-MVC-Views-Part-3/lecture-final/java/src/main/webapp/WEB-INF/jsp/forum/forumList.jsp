@@ -8,8 +8,9 @@
 	<c:forEach var="topic" items="${topicList}">
 		<c:url var="forumPostHref" value="/forum/forumDetail">
 			<c:param name="forumId">${topic.id}</c:param>
+			<c:param name="example" value="mac&cheese"/>
 		</c:url>
-		<li><a href="${forumPostHref}">${topic.title}</a></li>
+		<li><a href="${forumPostHref}"><c:out value="${topic.title}"/></a></li>
 	</c:forEach>
 </ul>
 
