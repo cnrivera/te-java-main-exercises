@@ -7,5 +7,9 @@
 
 <h1>Welcome to the site!</h1>
 
+<c:forEach var="weather" items="${forecasts}">
+<div>High: ${weather.highTemp}</div>
+<div>Low: ${weather.lowTemp}</div>
+</c:forEach>
 
 <c:import url="common/footer.jsp"/>

@@ -6,6 +6,7 @@ import javax.validation.Valid;
 
 import com.techelevator.authentication.AuthProvider;
 import com.techelevator.authentication.UnauthorizedException;
+import com.techelevator.model.RestWeatherDao;
 import com.techelevator.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +26,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AccountController {
     @Autowired
     private AuthProvider auth;
+    
 
     @RequestMapping(method=RequestMethod.GET, path={"/", "/index"})
     public String index(ModelMap mm) {  	
+    	
+    	RestWeatherDao dao = new RestWeatherDao();
+    	
+    	mm.put("forecasts", dao.getDailyWeather());
+    	
         return "index";
     }
     
