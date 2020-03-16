@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "75357e89-189e-4177-b7c9-e92f24da07af",
+		"name": "Lecture Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let item_count =  pm.response.json().length;",
+							"pm.variables.set(\"item_count\", item_count);",
+							"",
+							"",
+							"pm.test(\"Review List should have at least 1 item\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(item_count).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Review includes 'id', 'name', 'title', and 'review'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"    pm.expect(pm.response.text()).to.include(\"name\");",
+							"    pm.expect(pm.response.text()).to.include(\"title\");",
+							"    pm.expect(pm.response.text()).to.include(\"review\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert An Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae21d718-90a1-4584-a6e5-8d3672085e35",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"pm.test(\"Inserted item was returned with id\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.variables.set(\"new_id\", jsonData[\"id\"]);",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Test Reviewer\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n        \"name\": \"Test Reviewer\",\r\n        \"title\": \"Test Review Title\",\r\n        \"review\": \"This is the test review.\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews"
+					]
+				},
+				"description": "create new item"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items After Insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Item Count Increased After Insert\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(pm.variables.get(\"item_count\") + 1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Inserted Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a906058-16c4-4b10-9f30-cdc66f9ef00a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check for updated value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Test Reviewer\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews",
+						"{{new_id}}"
+					]
+				},
+				"description": "Get Single Item"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Inserted Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72b5ec65-42c4-4313-8d19-92f6675aff7d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n        \"name\": \"Updated Reviewer Name\",\r\n        \"title\": \"Updated Review Title\",\r\n        \"review\": \"This is the updated review.\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews",
+						"{{new_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item After Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a906058-16c4-4b10-9f30-cdc66f9ef00a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check for updated value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Updated Reviewer Name\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews",
+						"{{new_id}}"
+					]
+				},
+				"description": "Get Single Item"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb6adfa9-b5bf-4728-b388-884aebb3bec2",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews",
+						"{{new_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items After Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Item Count Decreased After Delete\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(pm.variables.get(\"item_count\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/product-reviews-api/api/reviews",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"product-reviews-api",
+						"api",
+						"reviews"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c2bb638c-c87b-4ad0-8d60-48e851309a02",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6dce31cf-2d1f-4613-9185-d733b9dab383",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
