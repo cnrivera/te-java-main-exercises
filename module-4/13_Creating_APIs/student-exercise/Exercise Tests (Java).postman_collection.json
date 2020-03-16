@@ -1,0 +1,521 @@
+{
+	"info": {
+		"_postman_id": "0c10ebab-4c17-47e9-878a-d3a06437f2a1",
+		"name": "Exercise Tests (Java)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Items",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"let item_count =  pm.response.json().length;",
+							"pm.variables.set(\"item_count\", item_count);",
+							"",
+							"",
+							"pm.test(\"Grocery List should have at least 1 item\", function () {",
+							"    let jsonData = pm.response.json();",
+							"    pm.expect(item_count).to.be.above(0);",
+							"});",
+							"",
+							"pm.test(\"Response includes 'id', 'name', and 'completed'\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"id\");",
+							"    pm.expect(pm.response.text()).to.include(\"name\");",
+							"    pm.expect(pm.response.text()).to.include(\"completed\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert An Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ae21d718-90a1-4584-a6e5-8d3672085e35",
+						"exec": [
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"let jsonData = pm.response.json();",
+							"pm.variables.set(\"new_id\", jsonData[\"id\"]);",
+							"",
+							"pm.test(\"Inserted item was returned\", function () {",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Chocolate Milk\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n        \"name\": \"Chocolate Milk\",\r\n        \"completed\": false\r\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries"
+					]
+				},
+				"description": "create new item"
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items After Insert",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Item Count Increased After Insert\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(pm.variables.get(\"item_count\") + 1);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Inserted Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a906058-16c4-4b10-9f30-cdc66f9ef00a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check for updated value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Chocolate Milk\");",
+							"    pm.expect(jsonData[\"completed\"]).to.eql(false);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"{{new_id}}"
+					]
+				},
+				"description": "Get Single Item"
+			},
+			"response": []
+		},
+		{
+			"name": "Try to Get Item with Invalid Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a906058-16c4-4b10-9f30-cdc66f9ef00a",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/-1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"-1"
+					]
+				},
+				"description": "Get Single Item"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Inserted Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72b5ec65-42c4-4313-8d19-92f6675aff7d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n        \"name\": \"Soy Milk\",\r\n        \"completed\": true\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"{{new_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Item After Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a906058-16c4-4b10-9f30-cdc66f9ef00a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check for updated value\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Soy Milk\");",
+							"    pm.expect(jsonData[\"completed\"]).to.eql(true);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"{{new_id}}"
+					]
+				},
+				"description": "Get Single Item"
+			},
+			"response": []
+		},
+		{
+			"name": "Update with id in body",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72b5ec65-42c4-4313-8d19-92f6675aff7d",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Check for correct values\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData[\"id\"]).to.eql(pm.variables.get(\"new_id\"));",
+							"    pm.expect(jsonData[\"name\"]).to.eql(\"Almond Milk\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n  \t\t\"id\": 9999,\r\n        \"name\": \"Almond Milk\",\r\n        \"completed\": true\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"{{new_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try to Update with Invalid Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "72b5ec65-42c4-4313-8d19-92f6675aff7d",
+						"exec": [
+							"pm.test(\"Status code is 404\", function () {",
+							"    pm.response.to.have.status(404);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n        \"name\": \"Soy Milk\",\r\n        \"completed\": true\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Item",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "eb6adfa9-b5bf-4728-b388-884aebb3bec2",
+						"exec": [
+							"pm.test(\"Status code is 204\", function () {",
+							"    pm.response.to.have.status(204);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries/{{new_id}}",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries",
+						"{{new_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Items After Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f0efd60f-0001-4c21-ac59-64bd90773d1c",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Item Count Decreased After Delete\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.length).to.eql(pm.variables.get(\"item_count\"));",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/shopping-list-api/api/groceries",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"shopping-list-api",
+						"api",
+						"groceries"
+					]
+				},
+				"description": "t"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c2bb638c-c87b-4ad0-8d60-48e851309a02",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "6dce31cf-2d1f-4613-9185-d733b9dab383",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
