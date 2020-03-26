@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src='script.js' defer></script>
+
+    <style>
+        .big {
+            font-size: 3em;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div id="myVueApp">
+        <div>{{ greeting.toUpperCase() }}</div>
+        <input type="text" v-model="greeting"/>
+        <div class="big" v-for="student in students">{{ student }}</div>
+        <button v-on:click="students.reverse()">Click Me</button>
+        <input type="text" v-model="newStudent" v-on:change="students.push(newStudent)"/>
+    </div>
+    
+</body>
+</html>
